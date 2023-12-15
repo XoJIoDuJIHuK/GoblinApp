@@ -1,0 +1,123 @@
+.add-form {
+    position: absolute;
+    width: 400px;
+    height: fit-content;
+    top: 200px;
+    left: 400px;
+    background-color: #5fc85f;
+    padding: 20px;
+    border-radius: 20px;
+    z-index: 1001;
+    
+    form {
+        display: grid;
+        grid-template-columns: auto auto;
+
+        div.transaction-reason-mode-wrapper {
+            display: flex;
+            flex-direction: row;
+            margin: 2px;
+            input[type=radio] {
+                width: 15px;
+                margin-right: 3px;
+            }
+            input[type=text] {
+                width: 100%;
+            }
+            select {
+                width: 100%;
+            }
+        }
+
+        label, button.cancel-button {
+            grid-column: 1;
+        }
+        input, button.submit-button, div.transaction-reason-mode-wrapper {
+            grid-column: 2;
+        }
+
+        button {
+            margin: 5px;
+            width: calc(max-content + 30px);
+            padding: 3px;
+            background-color: #006300;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            height: 30px;
+            border-radius: 10px;
+        }
+    }
+}
+
+.disbalance-transactions-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+
+    .disbalance-transaction {
+        position: relative;
+        width: 400px;
+        height: 100px;
+        display: flex;
+        border-radius: 10px;
+        box-shadow: 2px 2px 5px blue;
+        transition: all 0.3s ease;
+        margin: 20px 0 0 20px;
+    
+        .delete-button {
+            width: 30px;
+            height: 30px;
+            border-width: 0;
+            border-radius: 15px;
+            background-color: #ff9090;
+            display: none;
+            position: absolute;
+            left: 390px;
+            top: -20px;
+            svg {
+                margin-top: 5px;
+            }
+        }
+    
+        div.indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 10px;
+            min-height: 100%;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+        div.container {
+            margin: 0 0 0 10px;
+            display: flex;
+            width: 390px;
+            flex-direction: column;
+    
+            div.first-row {
+                display: grid;
+                width: 380px;
+                margin: 5px;
+                grid-template-columns: 50% 20% 30%;
+            }
+            div.second-row {
+                margin: 5px;
+                width: 380px;
+                height: max-content;
+            }
+        }
+    }
+    .disbalance-transaction.income div.indicator {
+        background-color: greenyellow;
+    }
+    .disbalance-transaction.outcome div.indicator {
+        background-color: red;
+    }
+    .disbalance-transaction:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 3px blue;
+        .delete-button {
+            display: block;
+        }
+    }
+}

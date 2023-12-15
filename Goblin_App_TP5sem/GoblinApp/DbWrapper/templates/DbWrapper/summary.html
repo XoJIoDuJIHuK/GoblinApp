@@ -1,0 +1,71 @@
+<h1 class="page-title">Сводка</h1>
+<div id="summary-wrapper">
+    <form class="filter-form" method="POST" action={% url "summary" %}>
+        {% csrf_token %}
+        <label>С</label>
+        <input name="start-date" id="start-date" type="date" value="{{ filter.start_date }}"/>
+        <label>По</label>
+        <input name="end-date" id="end-date" type="date" value="{{ filter.end_date }}"/>
+        <input type="submit" name="submit" value="Применить фильтр"/>
+        <input type="submit" name="refresh" value="Сбросить фильтр"/>
+    </form>
+    <div class="personal">
+        {% if debts_data.total_debt <= 0 %}<div class="total-debt good">{% else %}<div class="total-debt not-good">{% endif %}
+            <span class="material-symbols-outlined">payments</span>
+            <span>Суммарный долг: {{ debts_data.total_debt }}</span>
+        </div>
+        {% if debts_data.total_balance >= 0 %}<div class="total-balance good">{% else %}<div class="total-balance not-good">{% endif %}
+            <span class="material-symbols-outlined">account_balance_wallet</span>
+            <span>Итоговый баланс: {{ debts_data.total_balance }}</span>
+        </div>
+        <div class="total-budget">
+            <span class="material-symbols-outlined">credit_score</span>
+            <span id="budget-message"></span>
+        </div>
+    </div>
+    <div class="p2p">
+        <div class="self-debts">
+            <h2>Долги</h2>
+            {% if debts_data.self_debts %}
+                {% for entry in debts_data.self_debts %}
+                    <div class="debt-entry">
+                        <span class="material-symbols-outlined">person</span>
+                        <span class="amount">{{ entry.amount }}</span>
+                        <span class="material-symbols-outlined">arrow_forward</span>
+                        <span class="person-name">{{ entry.person_name }}</span>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h3>Пусто</h3>
+            {% endif %}
+        </div>
+        <div class="self-lends">
+            <h2>Одолжения</h2>
+            {% if debts_data.self_lends %}
+                {% for entry in debts_data.self_lends %}
+                    <div class="debt-entry">
+                        <span class="material-symbols-outlined">person</span>
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        <span class="amount">{{ entry.amount }}</span>
+                        <span class="person-name">{{ entry.person_name }}</span>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h3>Пусто</h3>
+            {% endif %}
+        </div>
+    </div>
+    <div class="disbalance-transactions">
+        <div class="data-wrapper">
+            {% for t in disbalance_transactions %}
+                <div class="transaction-data">
+                    <input type="hidden" name="date" value="{{t.date}}"/>
+                    <input type="hidden" name="amount" value="{{t.amount}}"/>
+                </div>
+            {% endfor%}
+        </div>
+        <div class="graph-wrapper">
+
+        </div>
+    </div>
+</div>

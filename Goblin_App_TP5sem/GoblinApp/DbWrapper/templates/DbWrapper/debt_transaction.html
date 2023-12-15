@@ -1,0 +1,51 @@
+{% if current_user.status != 'guest'%}<div class="debt-card" onclick="onTransactionClick(this, event)">
+{% else %}<div class="debt-card">{% endif %}
+    {% for role in transaction.restrictions %}
+        <input type="hidden" name="transaction-restriction" value="{{ role.name }}"/>
+    {% endfor %}
+    {% if current_user.status != 'guest'%}
+        {% if current_user.user.name == transaction.lender.name or current_user.status == 'admin' %}
+        <button class="delete-button delete-element" onclick="deleteTransaction(this)">
+            <form method="DELETE" url="{% url 'delete_debt_transaction' %}">
+                {% csrf_token %}
+                <input type="hidden" name="transaction_id" value="{{ transaction.id }}"/>
+            </form>
+            <svg class="delete-element" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" 
+                        fill="none" stroke="red" stroke-width="2" stroke-linecap="square" 
+                        stroke-linejoin="square">
+                <line x1="2" y1="2" x2="18" y2="18"/>
+                <line x1="2" y1="18" x2="18" y2="2"/>
+            </svg>
+        </button>
+        {% endif %}
+    {% endif %}
+    <div class="first-row">
+        <div class="name">{{ transaction.name }}</div>
+        <div class="amount">{{ transaction.amount|floatformat:2 }}</div>
+        <div class="lender">{{ transaction.lender.name }}</div>
+        <div class="date">{{ transaction.date }}</div>
+    </div>
+    <div class="second-row">
+        <div class="description">
+            {% if transaction.description %}
+                {{ transaction.description }}
+            {% else %}
+                Нет описания
+            {% endif %}
+        </div>
+        <div class="debtors-wrapper">
+            {% for debtor_entry in transaction.debtors_entries %}
+                {% if debtor_entry.fulfilled %}
+                <div class="debtor-entry" style="background-color:green">
+                {% else %}
+                <div class="debtor-entry" style="background-color:red">
+                {% endif %}
+                    <input type="hidden" name="debtor_entry_debtor_id" value="{{ debtor_entry.debtor.id }}"/>
+                    <input type="hidden" name="debtor_entry_multiplier" value="{{ debtor_entry.multiplier }}"/>
+                    <input type="hidden" name="debtor_entry_fulfilled" value="{{ debtor_entry.fulfilled }}"/>
+                    {{ debtor_entry.debtor.name }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

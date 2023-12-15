@@ -1,0 +1,340 @@
+.debt-transactions-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+
+    .debt-card {
+        position: relative;
+        background-color: #fff;
+        box-shadow: #5151f9 2px 2px 5px;
+        width: calc(100% - 20px);
+        width: 400px;
+        margin: 10px 10px 0 10px;
+        border-radius: 10px;
+        border-width: 0;
+        transition: all 0.3s ease;
+    
+        .first-row {
+            display: grid;
+            grid-template-columns: 40% 17.5% 17.5% 25%;
+            margin: 10px;
+            div {
+                font-size: 16px;
+            }
+            .amount, .lender, .date {
+                text-align: center;
+            }
+        }
+        .second-row {
+            display: flex;
+            margin: 0 10px 10px 10px;
+            justify-content: space-between;
+            .debtors-wrapper {
+                width: max-content;
+                display: flex;
+                flex-direction: row-reverse;
+                flex-wrap: wrap;
+                max-height: 130px;
+                overflow-x: auto;
+                .debtor-entry {
+                    padding: 5px;
+                    border-radius: 10px;
+                    margin: 2px;
+                    font-weight: 600;
+                    color: #fff;
+                }
+            }
+        }
+        .delete-button {
+            display: none;
+            position: absolute;
+            right: -10px;
+            top: -10px;
+            width: 30px;
+            height: 30px;
+            border-width: 0;
+            border-radius: 15px;
+            padding-top: 4px;
+            background-color: #ff9090;
+        }
+    }
+    .debt-card:hover {
+        transform: translate(2px, 2px);
+        box-shadow: #5151f9 1px 1px 3px;
+        .delete-button {
+            display: block;
+        }
+    }
+}
+
+.disbalance-transaction {
+    position: relative;
+    background-color: #fff;
+    box-shadow: #5151f9 2px 2px 5px;
+    width: calc(100% - 20px);
+    width: 400px;
+    margin: 10px 10px 0 10px;
+    border-radius: 10px;
+    border-width: 0;
+    transition: all 0.3s ease;
+
+    .first-row {
+        display: grid;
+        grid-template-columns: 40% 17.5% 17.5% 25%;
+        margin: 10px;
+        div {
+            font-size: 16px;
+        }
+        .amount, .lender, .date {
+            text-align: center;
+        }
+    }
+    .second-row {
+        display: flex;
+        margin: 0 10px 10px 10px;
+        background-color: #5151f9;
+        justify-content: space-between;
+
+        .debtors-wrapper {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            max-height: 130px;
+            overflow-x: scroll;
+
+            .debtor-entry {
+                padding: 5px;
+                border-radius: 10px;
+                margin: 2px;
+                font-weight: 600;
+                color: #fff;
+            }
+        }
+    }
+    .delete-button {
+        display: none;
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        width: 30px;
+        height: 30px;
+        border-width: 0;
+        border-radius: 15px;
+        background-color: #ff9090;
+    }
+}
+.disbalance-transaction:hover {
+    transform: translate(2px, 2px);
+    box-shadow: #5151f9 1px 1px 3px;
+    .delete-button {
+        display: block;
+    }
+}
+
+.add_form {
+    z-index: 1001;
+    position: fixed;
+    top: 80px;
+    left: 350px;
+    width: 500px;
+    min-height: 300px;
+    height: fit-content;
+    background-color: #5fc85f;
+    border-radius: 30px;
+
+    h2 {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        margin: 5px 0 0 5px;
+    }
+
+    form {
+        display: grid;
+        grid-template-columns: 30% 5% 65%;
+        grid-template-rows: repeat(4, 26px 4px) 76px 4px 26px 4px auto 8px auto 8px 30px;
+        margin: 30px;
+
+        label {
+            grid-column: 1;
+        }
+        label[for=transaction_name] {
+            grid-row: 1;
+        }
+        label[for=transaction_amount] {
+            grid-row: 3;
+        }
+        label[for=transaction_lender] {
+            grid-row: 5;
+        }
+        label[for=transaction_date] {
+            grid-row: 7;
+        }
+        label[for=transaction_description] {
+            grid-row: 9;
+        }
+        label[for=unused_debtors] {
+            grid-row: 11;
+        }
+        label[for=transaction_debtors] {
+            grid-row: 11;
+            grid-column: 3;
+        }
+        input[name=transaction_name] {
+            grid-row: 1;
+        }
+        input[name=transaction_amount] {
+            grid-row: 3;
+        }
+        select[name=transaction_lender] {
+            grid-row: 5;
+        }
+        input[name=transaction_date] {
+            grid-row: 7;
+        }
+        textarea {
+            grid-row: 9;
+            resize: none;
+        }
+        input, select, #transaction_debtors, textarea {
+            grid-column: 3;
+        }
+
+        label, input, select, textarea, #transaction_debtors {
+            font-size: 20px;
+        }
+        > input[type=text], > input[type=number], > input[type=date], select, textarea {
+            border-radius: 6px;
+            border-width: 0;
+            padding: 3px;
+        }
+
+        #unused_debtors {
+            grid-column: 1;
+            grid-row: 13;
+        }
+        #transaction_debtors {                
+            grid-column: 3;
+            grid-row: 13;
+        }
+        #unused-roles {
+            grid-column: 1;
+            grid-row: 15
+        }
+        #transaction-roles {
+            grid-column: 3;
+            grid-row: 15;
+        }
+        #unused_debtors, #transaction_debtors, #unused-roles, #transaction-roles {
+            width: 100%;
+            min-height: 32px;
+            height: fit-content;
+            max-height: 200px;
+            border-radius: 6px;
+            border-width: 0;
+            font-size: 14px;
+            overflow-y: auto;
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #fff;
+        }
+
+        #unused_debtors {
+            display: flex;
+            justify-content: space-evenly;
+
+            .debtor_card {
+                display: inline-flex;
+                background-color: rgb(217, 0, 255);
+                min-width: 10px;
+                width: min-content;
+                max-width: 100px;
+                overflow-x: hidden;
+                height: 16px;
+                border-radius: 5px;
+                padding: 3px;
+                border-width: 0;
+                align-items: center;
+                margin: 5px;
+                font-weight: 600;
+            }
+        }
+
+        #transaction_debtors {
+            .debtor_entry {
+                display: flex;
+                justify-content: space-between;
+                background-color: #5151f9;
+                min-width: 30px;
+                height: 22px;
+                border-radius: 8px;
+                border-width: 0;
+                align-items: center;
+                font-weight: 600;
+                margin: 5px;
+
+                span {
+                    width: min-content;
+                    max-width: 60px;
+                    overflow-x: hidden;
+                }
+
+                button {
+                    transition: background-color 0.3s ease;
+                    height: 100%;
+                    width: 26px;
+                    border-top-left-radius: 8px;
+                    border-bottom-left-radius: 8px;
+                    border-width: 0;
+                    margin-right: 5px;
+                }
+
+                input[type=number] {
+                    border-top-right-radius: 8px;
+                    border-bottom-right-radius: 8px;
+                    margin-left: 5px;
+                    width: 50px;
+                    height: inherit;
+                    border-width: 0;
+                    border-left: black 1px;
+                    font-weight: inherit;
+                    font-size: inherit;
+                    background-color: inherit;
+                    color: inherit;
+                    text-align: end;
+                }
+            }
+            .debtor_entry {
+                button {
+                    background-color: rgb(255, 0, 0);
+                }
+                button:hover {
+                    background-color: rgb(0, 255, 0);
+                }
+            }
+            .debtor_entry.fulfilled {
+                button {
+                    background-color: rgb(0, 255, 0);
+                }
+                button:hover {
+                    background-color: rgb(255, 0, 0);
+                }
+            }
+        }
+
+        .buttons-wrapper {
+            grid-row: 17;
+            grid-column-start: 1;
+            grid-column-end: 4;
+
+            display: flex;
+            justify-content: space-between;
+
+            button, input[type=submit] {
+                width: 200px;
+                height: 100%;
+                font-size: 20px;
+                border-radius: 8px;
+            }
+        }
+    }
+}

@@ -1,0 +1,90 @@
+#summary-wrapper {
+    margin: 10px;
+    form {
+        font-weight: 600;
+        background-color: rgb(172, 253, 172);
+        padding: 5px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        input {
+            margin-left: 5px;
+        }
+        input {
+            font-weight: 600;
+            font-size: 16px;
+            padding: 5px 2px 5px 2px;
+            border-radius: 5px;
+            border-width: 0;
+            transition: all 0.3s ease;
+        }
+        input[type=date], input[type=submit] {
+            background-color: rgb(0, 69, 0);
+            color: rgb(255, 255, 255);
+        }
+        input[type=date]:hover, input[type=submit]:hover {
+            background-color: #01b301;
+            color: rgb(0, 0, 0);
+        }
+        label {
+            margin-left: 10px;
+        }
+    }
+    div.personal {
+        margin: 10px 0 10px 0;
+        display: flex;
+        font-weight: 600;
+        color: white;
+        justify-content: flex-start;
+        > div {
+            width: fit-content;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            span {
+                margin: 5px;
+            }
+        }
+        :nth-child(2) {
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+        .good {
+            background-color: #01b301;
+        }
+        .not-good {
+            background-color: #bb0000;
+        }
+    }
+    div.p2p {
+        margin: 10px 0 10px;
+        > div {
+            h2, h3 {
+                margin: 0 0 0 5px;
+            }
+            div.debt-entry {
+                width: max-content;
+                padding: 5px 10px 5px 10px;
+                background-color: #01b301;
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        .self-debts {
+            margin: 0 0 10px 0;
+        }
+        span {
+            color: white;
+        }
+        span.person-name {
+            font-weight: 600;
+            margin-left: 5px;
+        }
+    }
+}

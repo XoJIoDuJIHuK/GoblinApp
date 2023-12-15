@@ -1,0 +1,55 @@
+<h1 class="page-title">Администраторская</h1>
+<div id="admin-wrapper">
+    <form>{% csrf_token %}</form>
+    <div class="table-wrapper users">
+        <h3>Пользователи</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <th>{{ user.id }} </th>
+                    <th>{{ user.name }} </th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <input type="number" name="user-id" min="1" value="1"/>
+        <button onclick="deleteUser()">Удалить пользователя</button>
+    </div>
+    <div class="table-wrapper debtors">
+        <h3>Должники</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for debtor in debtors %}
+                <tr>
+                    <th>{{ debtor.id }} </th>
+                    <th>{{ debtor.name }} </th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <input type="number" name="debtor-id" min="1" value="1"/>
+        <button onclick="deleteDebtor()">Удалить должника</button>
+        <input type="text" name="debtor-name" maxlength="50"/>
+        <input type="number" name="user-id" min="1" value="1"/>
+        <button onclick="createDebtor()">Добавить должника</button>
+    </div>
+    <div id="big-red-button-wrapper">
+        <span>Расчёт долгов всех пользователей перед всеми другими пользователями</span><br/>
+        <button id="calculate-all-debts" onclick="calculateAllDebts()" alt="xd">
+            <span>НЕ НАЖИМАТЬ</span>
+        </button>
+    </div>
+</div>

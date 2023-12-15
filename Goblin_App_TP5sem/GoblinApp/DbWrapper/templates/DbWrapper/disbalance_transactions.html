@@ -1,0 +1,114 @@
+<div id="disbalance-transactions">
+    <input type="hidden" src="{% for reason in filter.reasons %}{{ reason }}, {% endfor %}" 
+        id="filter-reasons-array"/>
+    <h1 class="page-title">{{ filter.mode }}</h1>
+    <form id="disbalance-transactions-filter" class="filter-wrapper" action="{% url 'disbalance_transactions' %}" method="POST">
+        {% csrf_token %}
+        <div class="filter-unit">
+            <label for="filter-mode">Тип:</label>
+            <select id="filter-mode" name="filter-mode">
+                <option value="Доходы и расходы" {% if filter.mode == 'Доходы и расходы' %}selected{% endif %}>Доходы и расходы</option>
+                <option value="Доходы" {% if filter.mode == 'Доходы' %}selected{% endif %}>Доходы</option>
+                <option value="Расходы" {% if filter.mode == 'Расходы' %}selected{% endif %}>Расходы</option>
+            </select>
+        </div>
+        <div class="filter-unit">
+            <label for="filter-reason">Категория:</label>
+            <select id="filter-reason" name="filter-reason">
+                <option value="--" {% if filter.reason == '--'%}selected{% endif %}>--</option>
+                {% for reason in filter.reasons %}
+                    <option value="{{ reason }}" {% if filter.reason == reason %}checked{% endif %}>{{ reason }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="filter-unit">
+            <label for="filter-date">Дата:</label>
+            <input type="date" name="filter-date" id="filter-date"/>
+        </div>
+        <input type="submit" value="Применить фильтр"/>
+        {% if current_user.status != 'guest' %}
+            <button type="button" onclick="showAddForm()">Добавить транзакцию</button>
+        {% endif %}
+    </form>
+
+    {% if current_user.status != 'guest' %}
+    <div id="add-disbalance-transaction-form-wrapper" class="hidden">
+        <div class="add-form" id="add-form">
+            <h2>Добавить транзакцию</h2>
+            <form>
+                {% csrf_token %}
+                <label for="transaction-name">Название</label>
+                <input maxlength="49" type="text" name="transaction-name" id="transaction-name" value="Transaction" required/><br/>
+                <label for="transaction-amount">Сумма</label>
+                <input type="number" value="0" min=0 max=21474836 id="transaction-amount" name="transaction-amount" required/><br/>
+                <label for="transaction-date">Дата</label>
+                <input type="date" name="transaction-date" id="transaction-date" value="0001-01-01" required/><br/>
+                <label for="transaction-reason">Причина</label>
+                <div class="transaction-reason-mode-wrapper">
+                    <input name="transaction-reason-mode" id="transaction-reason" type="radio" value="new" checked/>
+                    <input maxlength="49" type="text" id="new-transaction-reason" name="transaction-reason" 
+                        value="Другая причина" required/><br/>
+                </div>
+                <div class="transaction-reason-mode-wrapper">
+                    <input name="transaction-reason-mode" value="select" type="radio"/>
+                    <select id="select-transaction-reason" name="transaction-reason">
+                        <option value="Просто так" checked>Просто так</option>
+                        {% for reason in filter.reasons %}
+                            {% if reason != 'Просто так' %}
+                                <option value="{{ reason }}">{{ reason }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <button class="cancel-button" type="button" onclick="hideAddForm()">Отмена</button>
+                <button class="submit-button" type="button" onclick="addFormSubmit()" class="submit-button">Добавить</button>
+            </form>
+        </div>
+        <div class="backshadow"></div>
+    </div>
+    {% endif %}
+
+    {% if not data.disbalance_transactions %}
+        {% include "./nothing-to-see-here.html" %}
+    {% endif %}
+    <div class="disbalance-transactions-wrapper">
+        {% for transaction in data.disbalance_transactions %}
+            <div class="disbalance-transaction {% if transaction.amount > 0 %}income{% else %}outcome{% endif %}"
+                onclick="showEditForm(event)">
+                <div class="indicator"></div>
+                <input type="hidden" name="transaction-id" value="{{ transaction.id }}"/>
+                <form method="DELETE" url="{% url 'delete_disbalance_transaction' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="transaction-id" value="{{ transaction.id }}"/>
+                    <button type="button" class="delete-button delete-element" onclick="deleteDisbalanceTransaction(event)">
+                    
+                        <svg class="delete-element" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" 
+                                    fill="none" stroke="red" stroke-width="2" stroke-linecap="square" 
+                                    stroke-linejoin="square">
+                            <line class="delete-element" x1="2" y1="2" x2="18" y2="18"/>
+                            <line class="delete-element" x1="2" y1="18" x2="18" y2="2"/>
+                        </svg>
+                    </button>
+                </form>
+                <div class="container">
+                    <div class="first-row">
+                        <div class="name">{{ transaction.name }}</div>
+                        <div class="amount">
+                            {{ transaction.amount|floatformat:2|cut:"-" }}
+                        </div>
+                        <div class="date">{{ transaction.date }}</div>
+                    </div>
+                    <div class="second-row">
+                        <div class="reason">
+                            {% if transaction.reason %}
+                                {{ transaction.reason }}
+                            {% else %}
+                                Просто так
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

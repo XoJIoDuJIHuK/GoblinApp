@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ data.pagename }}</title>
+    <link rel="stylesheet" href="{% static 'DbWrapper/css/home.css' %}">
+    <script src="{% static 'DbWrapper/js/based_script.js' %}" defer></script>
+    {% if required_template == 'debt transactions' %}
+        <link rel="stylesheet" href="{% static 'DbWrapper/css/debt-transactions.css' %}"/>
+        <script src="{% static 'DbWrapper/js/debt_transactions.js' %}" defer></script>
+    {% elif required_template == 'disbalance transactions' %}
+        <link rel="stylesheet" href="{% static 'DbWrapper/css/disbalance-transactions.css' %}">
+        <script src="{% static 'DbWrapper/js/disbalance_transactions.js' %}" defer></script>
+    {% elif required_template == 'summary' %}
+        <link rel="stylesheet" href="{% static 'DbWrapper/css/summary.css' %}">
+        <script src="{% static 'DbWrapper/js/d3.v7.min.js' %}" defer></script>
+        <script src="{% static 'DbWrapper/js/plot.js' %}" defer></script>
+        <script type="module" src="{% static 'DbWrapper/js/summary.js' %}" defer></script>
+    {% elif required_template == 'admin' %}
+        <link rel="stylesheet" href="{% static 'DbWrapper/css/admin.css' %}">
+        <script src="{% static 'DbWrapper/js/admin.js' %}" defer></script>
+    {% endif %}
+</head>
+<body>
+    <div id="debtors-container" class="hidden">
+    {% for debtor in data.debtors %}
+        <input type="hidden" value="{{ debtor.name }}"/>
+    {% endfor %}
+    </div>
+    <div class="top-bar">
+        <div class="left-half">
+            <button id="hamburger" onclick="onHamburgerClick()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none" 
+                stroke="#fff" stroke-width="4" stroke-linecap="square" stroke-linejoin="round" style="margin: 5px 0 0 0">
+                    <line x1="3" y1="7" x2="27" y2="7"></line>
+                    <line x1="3" y1="15" x2="27" y2="15"></line>
+                    <line x1="3" y1="23" x2="27" y2="23"></line>
+                </svg>
+            </button>
+            <h2>Goblin App</h2>
+        </div>
+        <div class="right-half">
+            <div class="user-card">
+                <h3>
+                    {% if current_user.status == 'guest' %}
+                        Гость
+                    {% else %}
+                        {{ current_user.user.name }}
+                    {% endif %}
+                </h3>
+                <ul class="drop-menu">
+                    {% if current_user.status == 'guest' %}
+                        <li><button onclick="showLoginForm()">Войти</button></li>
+                        <li><button onclick="showSignupForm()">Зарегистрироваться</button></li>
+                    {% else %}
+                        <li><button onclick="signOut()">Выйти</button></li>
+                        <li><button onclick="onRoleManageClick()">Управление ролями</button></li>
+                        {% if admin_information %}
+                            <form id="importExportForm">{% csrf_token %}</form>
+                            <li><button onclick="importData()">Импортировать</button></li>
+                            <li><button onclick="exportData()">Экспортировать</button></li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="sign-form-wrapper" class="hidden">
+        <div id="sign-form">
+            <form action="{% url 'sign' %}">
+                {% csrf_token %}
+                <div id="signup-wrapper">
+                    <h2>Регистрация</h2>
+                    <label for="signup-name">Логин</label>
+                    <input type="text" maxlength="49" id="signup-name" name="signup-name" required/>
+                    <label for="signup-password">Пароль</label>
+                    <input type="password" maxlength="255" id="signup-password" name="signup-password" required/>
+                    <button type="button" onclick="sendSignRequest(false)">Зарегистрироваться</button>
+                </div>
+                <div id="login-wrapper" class="hidden">
+                    <h2>Вход</h2>
+                    <label for="login-name">Логин</label>
+                    <input type="text" maxlength="49" id="login-name" name="login-name" value="Aleh" required/>
+                    <label for="login-password">Пароль</label>
+                    <input type="password" maxlength="255" id="login-password" name="login-password" value="1234" required/>
+                    <button type="button" onclick="sendSignRequest(true)">Войти</button>
+                </div>
+                <button type="button" onclick="toggleSignFormHidden()">Отмена</button>
+            </form>
+        </div>
+        <div class="backshadow"></div>
+    </div>
+    {% if current_user.status != 'guest' %}
+        <div id="role-management-wrapper-wrapper" class="hidden">
+            <div id="role-management-wrapper">
+                <button class="delete-button" onclick="closeRoleManagementWindow()">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div class="buttons-wrapper">
+                    <button type="button" onclick="showUserRoles()">Показать мои роли</button>
+                    {% if admin_information %}
+                        {% if admin_information.all_other_usernames %}
+                            <button class="nav-button" type="button" onclick="showSelectedUserRoles()">Выбрать пользователя</button>
+                            <select class="other-usernames">
+                            {% for username in admin_information.all_other_usernames %}
+                                <option>{{ username }}</option>
+                            {% endfor %}
+                            </select>
+                        {% endif %}
+                        <button class="nav-button" type="button" onclick="showAddNewRoleSection()">Создать роль</button>
+                        <button class="nav-button" type="button" onclick="showDeleteNewRoleSection()">Удалить роль</button>
+                    {% endif %}
+                </div>
+                <div class="user-roles-management">
+                    <div class="all-roles">
+                        <h4>Нераспределённые роли</h4>
+                        <div class="roles-wrapper"></div>
+                    </div>
+                    <div class="user-roles">
+                        <h4 class="username"></h4>
+                        <h4>Назначенные роли</h4>
+                        <div class="roles-wrapper"></div>
+                        <form>{% csrf_token %}
+                            <button type="button" class="submit-button" onclick="saveCurrentUserRoles()">Сохранить</button></form>
+                    </div>
+                </div>
+                <div class="add-role-section hidden">
+                    <h4>Создать роль</h4>
+                    <input name="role-name" type="text" maxlength="50" value="new role"/>
+                    <form>{% csrf_token %}</form>
+                    <button onclick="createNewRole()">Сохранить</button>
+                </div>
+                <div class="delete-role-section hidden">
+                    <h4>Удалить роль</h4>
+                    <select name="role-name"></select>
+                    <form>{% csrf_token %}</form>
+                    <button onclick="deleteRole()">Удалить</button>
+                </div>
+            </div>
+            <div class="backshadow"></div>
+        </div>
+    {% endif %}
+    <aside>
+        <ul>
+            <li><a href="debt_transactions">Долги</a></li>
+            {% if current_user.status != 'guest' %}
+                <li><a href="disbalance_transactions">Доходы и расходы</a></li>
+                <li><a href="summary">Сводка</a></li>
+                {% if current_user.status == 'admin' %}
+                    <li><a href="admin">Администраторская</a></li>
+                {% endif %}
+            {% else %}
+                <li>А всё, ссылок больше нет</li>
+            {% endif %}
+        </ul>
+    </aside>
+    <main>
+        {% if required_template == 'debt transactions' %}
+            {% include './debt_transactions.html' with db_storage=db_storage %}
+        {% elif required_template == 'disbalance transactions' %}
+            {% include './disbalance_transactions.html' with db_storage=db_storage %}
+        {% elif required_template == 'summary' %}
+            {% include './summary.html' with db_storage=db_storage %}
+        {% elif required_template == 'admin' %}
+            {% include './admin.html' with db_storage=db_storage %}
+        {% endif %}
+    </main>
+</body>
+</html>

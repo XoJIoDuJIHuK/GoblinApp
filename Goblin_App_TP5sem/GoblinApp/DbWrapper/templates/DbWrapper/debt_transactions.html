@@ -1,0 +1,72 @@
+<h1 class="page-title">Долги</h1>
+{% if current_user.status != 'guest' %}
+<div id="add-debt-transaction-form-wrapper" class="hidden">
+    <div class="add_form">
+        <h2>Add transaction</h2>
+        <form action="{% url 'add_debt_transaction' %}" method="POST">
+            {% csrf_token %}
+            <label for="transaction_name">Название</label>
+            <input maxlength="49" type="text" name="transaction_name" id="transaction_name" value="Transaction" required/><br/>
+            <label for="transaction_amount">Сумма</label>
+            <input type="number" value="0" min=0 max=21474836 id="transaction_amount" name="transaction_amount" required/><br/>
+            <label for="transaction_lender">Кредитор</label>
+            <select name="transaction_lender" id="transaction_lender">
+                {% for debtor in data.debtors %}
+                    <option value="{{ debtor.id }}">{{ debtor.name }}</option>
+                {% endfor %}
+            </select><br/>
+            <label for="transaction_date">Дата</label>
+            <input type="date" name="transaction_date" id="transaction_date" value="0001-01-01" required/><br/>
+            <label for="transaction_description">Описание</label>
+            <textarea maxlength="255" cols="40" rows="5" id="transaction_description" name="transaction_description"></textarea><br/>
+            <label for="unused_debtors">Должники</label>
+            <label for="transaction_debtors">Выбранные должники</label>
+            <div id="unused_debtors"></div>
+            <div id="transaction_debtors"></div>
+            <input name="transaction_debtors_entries" type="hidden"/>
+            <div id="unused-roles"></div>
+            <div id="transaction-roles"></div>
+            <div class="buttons-wrapper">
+                <button type="button" onclick="cancelAddTransaction()">Отмена</button>
+                <button type="button" name="submit_button" onclick="onAddSubmit(event)">Создать</button>
+            </div>
+        </form>
+    </div>
+    <div class="backshadow"></div>
+</div>
+{% endif %}
+<div class="filter-wrapper">
+    <form method="POST" action="{% url 'get_debt_transactions' %}">
+        {% csrf_token %}
+        <div class="filter-unit">
+            <label for="filter_debtor">Должник</label>
+            <select id="filter_debtor" name="filter_debtor">
+                <option value="--" {% if data.initial_debtor == '--' %}selected{% endif %}>--</option>
+                {% for debtor in data.debtors %}
+                    <option value="{{ debtor.name }}" {% if data.initial_debtor == debtor.name %}selected
+                        {% endif %}>{{ debtor.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="filter-unit">
+            <label for="filter_lender">Кредитор</label>
+            <select id="filter_lender" name="filter_lender">
+                <option value="--" {% if data.initial_lender == '--' %}selected{% endif %}>--</option>
+                {% for debtor in data.debtors %}
+                    <option value="{{ debtor.name }}" {% if data.initial_lender == debtor.name %}selected{% endif %}>
+                        {{ debtor.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <input type="submit" value="Применить фильтр"/>
+        {% if current_user.status != 'guest' %}
+            <button type="button" onclick="showAddForm()">Добавить транзакцию</button><div class="add_form hidden">
+        {% endif %}
+</div>
+    </form>
+</div>
+<div class="debt-transactions-wrapper">
+    {% for transaction in data.debt_transactions %}
+        {% include './debt_transaction.html' with data=data %}
+    {% endfor %}
+</div>

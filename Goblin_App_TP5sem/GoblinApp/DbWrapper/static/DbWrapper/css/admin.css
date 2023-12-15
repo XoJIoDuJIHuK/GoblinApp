@@ -1,0 +1,23 @@
+#admin-wrapper {
+  margin: 10px;
+}
+#admin-wrapper table, #admin-wrapper th {
+  border: 1px solid black;
+}
+
+#big-red-button-wrapper {
+  margin: 20px 0 0 0;
+}
+#big-red-button-wrapper span {
+  font-size: 18px;
+}
+#big-red-button-wrapper button {
+  margin-top: 10px;
+  width: 200px;
+  height: 50px;
+  background-color: red;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 15px;
+}

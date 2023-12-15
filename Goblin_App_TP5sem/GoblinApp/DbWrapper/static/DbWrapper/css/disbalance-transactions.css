@@ -1,0 +1,146 @@
+.add-form {
+  position: absolute;
+  width: 400px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  top: 200px;
+  left: 400px;
+  background-color: #5fc85f;
+  padding: 20px;
+  border-radius: 20px;
+  z-index: 1001;
+}
+.add-form form {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto auto;
+  grid-template-columns: auto auto;
+}
+.add-form form div.transaction-reason-mode-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin: 2px;
+}
+.add-form form div.transaction-reason-mode-wrapper input[type=radio] {
+  width: 15px;
+  margin-right: 3px;
+}
+.add-form form div.transaction-reason-mode-wrapper input[type=text] {
+  width: 100%;
+}
+.add-form form div.transaction-reason-mode-wrapper select {
+  width: 100%;
+}
+.add-form form label, .add-form form button.cancel-button {
+  -ms-grid-column: 1;
+  grid-column: 1;
+}
+.add-form form input, .add-form form button.submit-button, .add-form form div.transaction-reason-mode-wrapper {
+  -ms-grid-column: 2;
+  grid-column: 2;
+}
+.add-form form button {
+  margin: 5px;
+  width: calc(-webkit-max-content + 30px);
+  width: calc(-moz-max-content + 30px);
+  width: calc(max-content + 30px);
+  padding: 3px;
+  background-color: #006300;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  height: 30px;
+  border-radius: 10px;
+}
+
+.disbalance-transactions-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+.disbalance-transactions-wrapper .disbalance-transaction {
+  position: relative;
+  width: 400px;
+  height: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 10px;
+  -webkit-box-shadow: 2px 2px 5px blue;
+          box-shadow: 2px 2px 5px blue;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  margin: 20px 0 0 20px;
+}
+.disbalance-transactions-wrapper .disbalance-transaction .delete-button {
+  width: 30px;
+  height: 30px;
+  border-width: 0;
+  border-radius: 15px;
+  background-color: #ff9090;
+  display: none;
+  position: absolute;
+  left: 390px;
+  top: -20px;
+}
+.disbalance-transactions-wrapper .disbalance-transaction .delete-button svg {
+  margin-top: 5px;
+}
+.disbalance-transactions-wrapper .disbalance-transaction div.indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 10px;
+  min-height: 100%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.disbalance-transactions-wrapper .disbalance-transaction div.container {
+  margin: 0 0 0 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 390px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.disbalance-transactions-wrapper .disbalance-transaction div.container div.first-row {
+  display: -ms-grid;
+  display: grid;
+  width: 380px;
+  margin: 5px;
+  -ms-grid-columns: 50% 20% 30%;
+  grid-template-columns: 50% 20% 30%;
+}
+.disbalance-transactions-wrapper .disbalance-transaction div.container div.second-row {
+  margin: 5px;
+  width: 380px;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+.disbalance-transactions-wrapper .disbalance-transaction.income div.indicator {
+  background-color: greenyellow;
+}
+.disbalance-transactions-wrapper .disbalance-transaction.outcome div.indicator {
+  background-color: red;
+}
+.disbalance-transactions-wrapper .disbalance-transaction:hover {
+  -webkit-transform: translate(2px, 2px);
+          transform: translate(2px, 2px);
+  -webkit-box-shadow: 1px 1px 3px blue;
+          box-shadow: 1px 1px 3px blue;
+}
+.disbalance-transactions-wrapper .disbalance-transaction:hover .delete-button {
+  display: block;
+}

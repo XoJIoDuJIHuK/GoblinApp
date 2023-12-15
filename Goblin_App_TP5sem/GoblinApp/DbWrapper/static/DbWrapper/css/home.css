@@ -1,0 +1,431 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto Light", sans-serif;
+}
+
+.page-title {
+  margin: 5px 10px 5px 10px;
+}
+
+.filter-wrapper {
+  padding: 10px;
+  background-color: #5fc85f;
+  color: white;
+  border-radius: 5px;
+  margin: 0 10px 0 10px;
+}
+.filter-wrapper .filter-unit {
+  display: inline-block;
+  margin-bottom: 3px;
+  font-weight: 600;
+}
+.filter-wrapper .filter-unit select {
+  border-radius: 5px;
+  padding: 2px;
+  max-width: 200px;
+}
+.filter-wrapper input[type=submit], .filter-wrapper button {
+  padding: 3px;
+  border-radius: 5px;
+  border-width: 1px;
+  background-color: #006300;
+  color: white;
+  font-weight: 600;
+}
+
+/* fallback */
+@font-face {
+  font-family: "Material Symbols Outlined";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./../material-icons.woff2") format("woff2");
+}
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+}
+
+#page-message {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100vw;
+  height: 80vh;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+body {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#sign-form {
+  position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 20px;
+  border-radius: 20px;
+  top: 200px;
+  left: 400px;
+  background-color: #01b301;
+  z-index: 1001;
+}
+#sign-form #signup-wrapper, #sign-form #login-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+#sign-form #signup-wrapper label, #sign-form #login-wrapper label {
+  font-size: 20px;
+  margin: 10px 0 5px 0;
+}
+#sign-form #signup-wrapper input, #sign-form #login-wrapper input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 3px 0 3px 5px;
+  font-size: 16px;
+  height: 25px;
+  border-radius: 8px;
+  border-width: 0;
+}
+#sign-form button {
+  width: 100%;
+  height: 35px;
+  border-radius: 10px;
+  border-width: 0;
+  margin-top: 10px;
+  background-color: #006300;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+#sign-form button:hover {
+  background-color: #5fc85f;
+  color: black;
+  font-size: 16px;
+}
+
+.top-bar {
+  width: 100%;
+  height: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #01b301;
+  z-index: 3;
+}
+.top-bar .left-half {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-left: 10px;
+}
+.top-bar .left-half button {
+  background-color: transparent;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 20px;
+  border-width: 0;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+.top-bar .left-half button svg line {
+  -webkit-transition: -webkit-transform 0.3s ease;
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+}
+.top-bar .left-half button:hover {
+  background-color: #5fc85f;
+}
+.top-bar .left-half button.active svg line:nth-child(1) {
+  -webkit-transform: rotate(45deg) translate(0, 8px);
+          transform: rotate(45deg) translate(0, 8px);
+}
+.top-bar .left-half button.active svg line:nth-child(2) {
+  display: none;
+}
+.top-bar .left-half button.active svg line:nth-child(3) {
+  -webkit-transform: rotate(-45deg) translate(0, -8px);
+          transform: rotate(-45deg) translate(0, -8px);
+}
+.top-bar .left-half h2 {
+  margin-left: 20px;
+  color: #fff;
+}
+.top-bar .user-card {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #5fc85f;
+  margin-right: 15px;
+}
+.top-bar .user-card h3 {
+  color: #fff;
+  margin-right: 15px;
+}
+.top-bar .user-card .drop-menu {
+  list-style: none;
+  top: 40px;
+  width: 200px;
+  position: absolute;
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.top-bar .user-card .drop-menu button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 190px;
+  height: 30px;
+  padding: 10px;
+  border-radius: 5px;
+  border-color: #01b301;
+}
+.top-bar .user-card:hover {
+  background-color: #006300;
+}
+.top-bar .user-card:hover .drop-menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+aside {
+  z-index: 3;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  left: -100%;
+  width: 300px;
+  height: 100%;
+  top: 60px;
+  background-color: rgb(17, 37, 20);
+  color: #fff;
+  -webkit-transition: left 0.3s ease;
+  transition: left 0.3s ease;
+}
+aside ul {
+  list-style: none;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+aside ul li {
+  margin-bottom: 10px;
+}
+aside ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+}
+
+aside.active {
+  left: 0;
+}
+
+main {
+  min-height: calc(100% - 60px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#role-management-wrapper {
+  z-index: 1001;
+  position: absolute;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 20% 80%;
+  grid-template-columns: 20% 80%;
+  width: 700px;
+  height: 500px;
+  left: 100px;
+  top: 100px;
+  background-color: rgb(5, 136, 31);
+  border-radius: 10px;
+}
+#role-management-wrapper button {
+  background-color: rgb(255, 234, 0);
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px 0 5px 0;
+  font-weight: 600;
+}
+#role-management-wrapper .buttons-wrapper, #role-management-wrapper .all-roles, #role-management-wrapper .user-roles {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#role-management-wrapper .buttons-wrapper {
+  -ms-grid-column: 1;
+  grid-column: 1;
+}
+#role-management-wrapper .buttons-wrapper button {
+  width: calc(100% - 10px);
+}
+#role-management-wrapper .buttons-wrapper select {
+  width: calc(100% - 10px);
+  border-radius: 5px;
+  padding: 5px 0 5px 0;
+  background-color: #5fc85f;
+  font-weight: 600;
+  color: white;
+}
+#role-management-wrapper .user-roles-management {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 50% 50%;
+  grid-template-columns: 50% 50%;
+  width: 100%;
+}
+#role-management-wrapper .user-roles-management .all-roles {
+  -ms-grid-column: 1;
+  grid-column: 1;
+}
+#role-management-wrapper .user-roles-management .user-roles {
+  -ms-grid-column: 2;
+  grid-column: 2;
+}
+#role-management-wrapper .user-roles-management .all-roles, #role-management-wrapper .user-roles-management .user-roles {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+#role-management-wrapper .user-roles-management .all-roles h4, #role-management-wrapper .user-roles-management .user-roles h4 {
+  margin: 5px;
+  color: #ffffff;
+}
+#role-management-wrapper .add-role-section, #role-management-wrapper .delete-role-section {
+  margin: 5px;
+  color: white;
+}
+#role-management-wrapper .add-role-section input, #role-management-wrapper .add-role-section select, #role-management-wrapper .delete-role-section input, #role-management-wrapper .delete-role-section select {
+  margin: 5px 0 0 0;
+}
+#role-management-wrapper .delete-button {
+  position: absolute;
+  top: -20px;
+  left: 690px;
+  width: 40px;
+  height: 40px;
+  background-color: #5fc85f;
+  border-radius: 20px;
+  border-width: 2px;
+  border-color: #006300;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+#role-management-wrapper .delete-button span {
+  color: red;
+  font-size: 32px;
+}
+
+.role {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  border-radius: 5px;
+  font-weight: 600;
+  background-color: rgb(168, 255, 168);
+  padding: 3px;
+  margin: 5px;
+}
+
+.backshadow {
+  z-index: 1000;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
